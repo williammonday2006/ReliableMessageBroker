@@ -1,19 +1,13 @@
 public class Main {
     public static void main(String[] args) {
-        QueueInterface<Message> queue = new LinkedQueue<>();
+        Broker broker = new Broker();
 
-        try {
-            queue.enqueue(new Message("001", "First message"));
-            queue.enqueue(new Message("002", "Second message"));
-            queue.enqueue(new Message("003", "Third message"));
+        broker.enqueue(new Message("001", "First message", 90));
+        broker.enqueue(new Message("002", "Second message", 50));
+        broker.enqueue(new Message("003", "Third message", 20));
+        broker.enqueue(new Message("004", "Fourth message", 75));
 
-            System.out.println("Dequeuing messages:");
-
-            while (!queue.isEmpty()) {
-                System.out.println(queue.dequeue());
-            }
-        } catch (QueueOverflowException | QueueUnderflowException e) {
-            System.out.println("Queue error: " + e.getMessage());
-        }
+        System.out.println("Processing batch:");
+        broker.processBatch();
     }
 }
